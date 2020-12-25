@@ -1602,6 +1602,21 @@ def calc(mode):
         show_number=0
         showsta(text='결과 집계중')
 
+        
+        # !inject! -결과 전체 리스트를 txt로 출력
+        stream_save_list = StringIO()
+        stream_save_list0 = StringIO()
+        json.dump(save_list, stream_save_list)
+        json.dump(save_list0, stream_save_list0)
+
+        with open('save_list.txt', 'w') as fd :
+            stream_save_list.seek(0)
+            shutil.copyfileobj(stream_save_list, fd)
+
+        with open('save_list0.txt', 'w') as fd :
+            stream_save_list0.seek(0)
+            shutil.copyfileobj(stream_save_list0, fd)
+
         ranking=[]
         ranking0=[]
         for j in range(0,5):
@@ -1620,19 +1635,6 @@ def calc(mode):
                 pass
         ranking=[ranking,ranking0]
 
-        # !inject! -결과 전체 리스트를 txt로 출력
-        stream_save_list = StringIO()
-        stream_save_list0 = StringIO()
-        json.dump(save_list, stream_save_list)
-        json.dump(save_list0, stream_save_list0)
-
-        with open('save_list.txt', 'w') as fd :
-            stream_save_list.seek(0)
-            shutil.copyfileobj(stream_save_list, fd)
-
-        with open('save_list0.txt', 'w') as fd :
-            stream_save_list0.seek(0)
-            shutil.copyfileobj(stream_save_list0, fd)
 
         show_result(ranking,'deal',ele_skill,cool_eff)    
 
