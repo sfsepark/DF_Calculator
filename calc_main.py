@@ -32,6 +32,8 @@ import calc_update
 import calc_list_wep,calc_list_job,calc_fullset,calc_setlist,calc_gif,calc_profile,calc_result
 from calc_calc import make_setopt_num,make_set_list,hard_coding_dealer,inv_auto_dealer,make_all_equ_list
 
+from io import StringIO
+import shutil
 
 
 def _from_rgb(rgb):
@@ -1617,7 +1619,22 @@ def calc(mode):
             except ValueError as error:
                 pass
         ranking=[ranking,ranking0]
-        show_result(ranking,'deal',ele_skill,cool_eff)
+
+        # !inject! -결과 전체 리스트를 txt로 출력
+        stream_save_list = StringIO()
+        stream_save_list0 = StringIO()
+        json.dump(save_list, stream_save_list)
+        json.dump(save_list0, stream_save_list0)
+
+        with open('save_list.txt', 'w') as fd :
+            stream_save_list.seek(0)
+            shutil.copyfileobj(stream_save_list, fd)
+
+        with open('save_list0.txt', 'w') as fd :
+            stream_save_list0.seek(0)
+            shutil.copyfileobj(stream_save_list0, fd)
+
+        show_result(ranking,'deal',ele_skill,cool_eff)    
 
 
     else: ##버퍼
